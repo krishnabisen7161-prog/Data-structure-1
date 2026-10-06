@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>DSA Quest - Data Structure Learning Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0b1020;
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #151d38, #202b52);
+            padding: 20px;
+            border-bottom: 2px solid #00e5ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #00e5ff;
+        }
+
+        .stats {
+            display: flex;
+            gap: 15px;
+        }
+
+        .stat {
+            background: #11182d;
+            padding: 10px 15px;
+            border-radius: 12px;
+            border: 1px solid #2e3d68;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 45px 20px 30px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: #00e5ff;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #b9c3df;
+            font-size: 17px;
+        }
+
+        /* PROGRESS */
+        .progress-box {
+            max-width: 850px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #151d38;
+            border-radius: 18px;
+            border: 1px solid #2d3b64;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .progress {
+            height: 14px;
+            background: #303a59;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00e5ff, #7c4dff);
+            transition: 0.5s;
+        }
+
+        /* TOPICS */
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin: 25px 0 20px;
+        }
+
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .topic {
+            background: #151d38;
+            border: 1px solid #2e3d68;
+            border-radius: 18px;
+            padding: 25px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .topic:hover {
+            transform: translateY(-6px);
+            border-color: #00e5ff;
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.2);
+        }
+
+        .topic-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .topic h3 {
+            margin-bottom: 8px;
+        }
+
+        .topic p {
+            color: #aeb9d6;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            border: none;
+            padding: 11px 18px;
+            border-radius: 10px;
+            background: #00e5ff;
+            color: #06101b;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        button:disabled {
+            background: #444d66;
+            color: #aaa;
+            cursor: not-allowed;
+        }
+
+        /* QUIZ */
+        .quiz-section {
+            display: none;
+            max-width: 850px;
+            margin: 30px auto;
+            background: #151d38;
+            border: 1px solid #2e3d68;
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .quiz-section h2 {
+            color: #00e5ff;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .option {
+            background: #222c4a;
+            color: white;
+            border: 1px solid #3b4b73;
+            text-align: left;
+            width: 100%;
+        }
+
+        .option:hover {
+            background: #2d3b64;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .next-btn {
+            margin-top: 20px;
+            display: none;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 40px;
+            color: #8e9abb;
+            border-top: 1px solid #273452;
+        }
+
+        /* MOBILE */
+        @media(max-width: 600px) {
+
+            header {
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .stats {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .stat {
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🎮 DSA QUEST
+    </div>
+
+    <div class="stats">
+        <div class="stat">
+            ⭐ XP: <span id="xp">0</span>
+        </div>
+
+        <div class="stat">
+            🏆 Level: <span id="level">1</span>
+        </div>
+    </div>
+
+</header>
+
+
+<section class="hero">
+
+    <h1>DATA STRUCTURE QUEST</h1>
+
+    <p>
+        Learn Data Structures • Complete Challenges • Earn XP
+    </p>
+
+</section>
+
+
+<div class="progress-box">
+
+    <div class="progress-info">
+        <span>Learning Progress</span>
+        <span id="progressText">0%</span>
+    </div>
+
+    <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+</div>
+
+
+<div class="container">
+
+    <h2 class="section-title">
+        🗺️ Choose Your Mission
+    </h2>
+
+    <div class="topics">
+
+        <div class="topic">
+
+            <div class="topic-icon">📦</div>
+
+            <h3>Array</h3>
+
+            <p>
+                Learn indexing, traversal and basic operations.
+            </p>
+
+            <button onclick="startQuiz('array')">
+                Start Mission
+            </button>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-icon">📚</div>
+
+            <h3>Stack</h3>
+
+            <p>
+                Learn LIFO, push, pop and stack applications.
+            </p>
+
+            <button onclick="startQuiz('stack')">
+                Start Mission
+            </button>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-icon">🚶</div>
+
+            <h3>Queue</h3>
+
+            <p>
+                Learn FIFO, enqueue and dequeue operations.
+            </p>
+
+            <button onclick="startQuiz('queue')">
+                Start Mission
+            </button>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-icon">🌳</div>
+
+            <h3>Tree</h3>
+
+            <p>
+                Learn nodes, root, leaves and binary trees.
+            </p>
+
+            <button onclick="startQuiz('tree')">
+                Start Mission
+            </button>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-icon">🕸️</div>
+
+            <h3>Graph</h3>
+
+            <p>
+                Learn vertices, edges and graph traversal.
+            </p>
+
+            <button onclick="startQuiz('graph')">
+                Start Mission
+            </button>
+
+        </div>
+
+
+        <div class="topic">
+
+            <div class="topic-icon">🔗</div>
+
+            <h3>Linked List</h3>
+
+            <p>
+                Learn nodes, pointers and linked structures.
+            </p>
+
+            <button onclick="startQuiz('linkedlist')">
+                Start Mission
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- QUIZ -->
+
+    <div class="quiz-section" id="quiz">
+
+        <h2>⚔️ Challenge Arena</h2>
+
+        <div class="question" id="question">
+            Question
+        </div>
+
+        <div class="options" id="options">
+        </div>
+
+        <div id="result"></div>
+
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">
+            Next Question ➜
+        </button>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    🎮 DSA Quest | Data Structure Learning Portal
+
+    <br><br>
+
+    Learn • Practice • Level Up 🚀
+
+</footer>
+
+
+<script>
+
+    /* =========================
+       GAME VARIABLES
+    ========================= */
+
+    let xp = 0;
+    let level = 1;
+    let completed = 0;
+
+    let currentTopic = "";
+    let currentQuestion = 0;
+
+
+    /* =========================
+       QUIZ DATABASE
+    ========================= */
+
+    const quizzes = {
+
+        array: [
+
+            {
+                question: "What is the first index of an array in most programming languages?",
+                options: ["0", "1", "-1", "2"],
+                answer: 0
+            },
+
+            {
+                question: "Which operation accesses an array element directly?",
+                options: ["Indexing", "Sorting", "Searching", "Merging"],
+                answer: 0
+            }
+
+        ],
+
+
+        stack: [
+
+            {
+                question: "Which principle does Stack follow?",
+                options: [
+                    "FIFO",
+                    "LIFO",
+                    "Random",
+                    "Priority"
+                ],
+                answer: 1
+            },
+
+            {
+                question: "Which operation removes an element from Stack?",
+                options: [
+                    "Push",
+                    "Insert",
+                    "Pop",
+                    "Delete"
+                ],
+                answer: 2
+            }
+
+        ],
+
+
+        queue: [
+
+            {
+                question: "Which principle does Queue follow?",
+                options: [
+                    "LIFO",
+                    "FIFO",
+                    "Random",
+                    "Binary"
+                ],
+                answer: 1
+            },
+
+            {
+                question: "Which operation adds an element to Queue?",
+                options: [
+                    "Enqueue",
+                    "Pop",
+                    "Delete",
+                    "Peek"
+                ],
+                answer: 0
+            }
+
+        ],
+
+
+        tree: [
+
+            {
+                question: "What is the topmost node of a tree called?",
+                options: [
+                    "Leaf",
+                    "Root",
+                    "Child",
+                    "Edge"
+                ],
+                answer: 1
+            },
+
+            {
+                question: "A binary tree node can have maximum how many children?",
+                options: [
+                    "1",
+                    "2",
+                    "3",
+                    "4"
+                ],
+                answer: 1
+            }
+
+        ],
+
+
+        graph: [
+
+            {
+                question: "A graph consists mainly of what?",
+                options: [
+                    "Arrays and stacks",
+                    "Vertices and edges",
+                    "Queues and nodes",
+                    "Roots and leaves"
+                ],
+                answer: 1
+            },
+
+            {
+                question: "What does BFS stand for?",
+                options: [
+                    "Binary First Search",
+                    "Breadth First Search",
+                    "Basic File Search",
+                    "Best First Structure"
+                ],
+                answer: 1
+            }
+
+        ],
+
+
+        linkedlist: [
+
+            {
+                question: "A linked list is made up of what?",
+                options: [
+                    "Nodes",
+                    "Only arrays",
+                    "Only indexes",
+                    "Matrices"
+                ],
+                answer: 0
+            },
+
+            {
+                question: "Each linked list node generally contains data and what?",
+                options: [
+                    "Loop",
+                    "Pointer",
+                    "Array",
+                    "Class only"
+                ],
+                answer: 1
+            }
+
+        ]
+
+    };
+
+
+    /* =========================
+       START QUIZ
+    ========================= */
+
+    function startQuiz(topic) {
+
+        currentTopic = topic;
+        currentQuestion = 0;
+
+        document.getElementById("quiz").style.display = "block";
+
+        document.getElementById("quiz").scrollIntoView({
+            behavior: "smooth"
+        });
+
+        showQuestion();
+
+    }
+
+
+    /* =========================
+       SHOW QUESTION
+    ========================= */
+
+    function showQuestion() {
+
+        const quizData = quizzes[currentTopic][currentQuestion];
+
+        document.getElementById("question").innerText =
+            quizData.question;
+
+        const optionsDiv =
+            document.getElementById("options");
+
+        optionsDiv.innerHTML = "";
+
+        document.getElementById("result").innerText = "";
+
+        document.getElementById("nextBtn").style.display = "none";
+
+
+        quizData.options.forEach((option, index) => {
+
+            const button =
+                document.createElement("button");
+
+            button.innerText = option;
+
+            button.className = "option";
+
+            button.onclick = function () {
+
+                checkAnswer(index);
+
+            };
+
+            optionsDiv.appendChild(button);
+
+        });
+
+    }
+
+
+    /* =========================
+       CHECK ANSWER
+    ========================= */
+
+    function checkAnswer(selected) {
+
+        const quizData =
+            quizzes[currentTopic][currentQuestion];
+
+        const buttons =
+            document.querySelectorAll(".option");
+
+        buttons.forEach(button => {
+
+            button.disabled = true;
+
+        });
+
+
+        if (selected === quizData.answer) {
+
+            document.getElementById("result").innerText =
+                "✅ Correct! +50 XP";
+
+            xp += 50;
+
+            updateGame();
+
+        } else {
+
+            document.getElementById("result").innerText =
+                "❌ Wrong Answer! Try the next question.";
+
+        }
+
+
+        document.getElementById("nextBtn").style.display =
+            "inline-block";
+
+    }
+
+
+    /* =========================
+       NEXT QUESTION
+    ========================= */
+
+    function nextQuestion() {
+
+        currentQuestion++;
+
+        if (currentQuestion >= quizzes[currentTopic].length) {
+
+            completed++;
+
+            xp += 100;
+
+            updateGame();
+
+            document.getElementById("question").innerText =
+                "🎉 Mission Completed!";
+
+            document.getElementById("options").innerHTML =
+                "<p>You earned a +100 XP mission bonus!</p>";
+
+            document.getElementById("result").innerText =
+                "🏆 Great job! Choose another mission.";
+
+            document.getElementById("nextBtn").style.display =
+                "none";
+
+            return;
+
+        }
+
+        showQuestion();
+
+    }
+
+
+    /* =========================
+       UPDATE GAME
+    ========================= */
+
+    function updateGame() {
+
+        level = Math.floor(xp / 200) + 1;
+
+        let progress =
+            Math.min(completed * 16.6, 100);
+
+        document.getElementById("xp").innerText = xp;
+
+        document.getElementById("level").innerText = level;
+
+        document.getElementById("progressText").innerText =
+            Math.round(progress) + "%";
+
+        document.getElementById("progressBar").style.width =
+            progress + "%";
+
+    }
+
+</script>
+
+</body>
+  </html>
